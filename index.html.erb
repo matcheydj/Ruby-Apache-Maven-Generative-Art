@@ -1,0 +1,13 @@
+<h1>Image Manipulation Tool</h1>
+<form action="/upload" method="post" enctype="multipart/form-data">
+  <label for="image_file">Upload image:</label>
+  <input type="file" id="image_file" name="image_file" accept="image/*" required>
+  <br>
+  <h3>Select effects:</h3>
+  <ul>
+    <li><label><input type="checkbox" name="effects[]" value="geometric_patterns"> Geometric Patterns</label></li>
+    <li><label><input type="checkbox" name="effects[]" value="fractals"> Fractals</label></li>
+    </ul>
+  <br>
+  <button type="submit">Apply Effects</button>
+</form>
