@@ -1,0 +1,17 @@
+# Treelibs
+project_directory/
+│
+├── Gemfile
+├── main.rb
+├── image_manipulation.rb
+├── Index.rb
+└── <%= form_tag '/generate_random', method: 'post' do %><button type="submit">Generate Random Combined Image</button><% end %>
+│
+└── {X}
+├── {Y}
+│
+└── {Z}
+│
+└── lib/
+    ├── Library.rb
+    └── Library_Num.rb
