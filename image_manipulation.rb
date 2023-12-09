@@ -1,13 +1,45 @@
 require 'rmagick'
+require 'benchmark/ips'
 
 class ImageManipulation
+  # Define a cache for storing modified images
+  @modified_images = {}
+
   def initialize(image_path)
-    @image = Magick::Image.read(image_path).first
+    @original_image = Magick::Image.read(image_path).first
   end
 
-  # Define individual methods for each effect
+  # Define common logic for applying effects with random colors
+  def apply_effect_with_random_colors(effect)
+    modified_image = get_modified_image(effect)
+    modified_image.modulate(Magick::Pixel.new(rand(256), rand(256), rand(256)))
+    modified_image
+  end
+
+    # Define individual methods for each effect
   def apply_geometric_patterns
     # Implement logic for applying geometric patterns
+    # Create a new image
+  image = Magick::Image.new(500, 500)
+
+  # Create a Draw object
+  draw = Magick::Draw.new
+
+  # Set some drawing attributes
+  draw.stroke('black')
+  draw.fill('white')
+
+  # Draw a series of lines to form a geometric pattern
+  (0..500).step(20) do |i|
+  draw.line(0, i, 500, i)
+  draw.line(i, 0, i, 500)
+  end
+
+# Apply the drawing to the image
+draw.draw(image)
+
+# Save the image to a file
+image.write('geometric_pattern.png')
   end
 
   def apply_fractals
@@ -53,7 +85,35 @@ class ImageManipulation
     case effect
     when :geometric_patterns
       # Apply geometric patterns to the image
-    when :fractals
+      @image = Magick::Image.read(geometric_pattern.png).first
+    end
+      def apply_geometric_patterns
+    # Create a Draw object
+    draw = Magick::Draw.new
+
+    # Set some drawing attributes
+    draw.stroke('black')
+    draw.fill('white')
+
+    # Draw a series of lines to form a geometric pattern
+    (0..@image.columns).step(20) do |i|
+      draw.line(0, i, @image.columns, i)
+      draw.line(i, 0, i, @image.rows)
+    end
+
+    # Apply the drawing to the image
+    draw.draw(@image)
+
+    # Save the modified image
+    @image.write("geometric_#{image_path}")
+  end
+end
+
+# Usage
+image_manipulation = ImageManipulation.new('path_to_your_image.png')
+image_manipulation.apply_geometric_patterns
+
+    ## when :fractals
       # Generate a fractal image based on the original
     when :cellular_automata
       # Apply cellular automata rules for dynamic evolution
@@ -70,6 +130,80 @@ class ImageManipulation
     when :moving_particles
       # Add moving particles to the image
     end
+
+  # Define individual methods for each effect
+  def apply_geometric_patterns
+    # Implement logic for applying geometric patterns
+    # ...
+  end
+
+  def apply_fractals
+    # Implement logic for generating a fractal image
+    # ...
+  end
+
+  # ... define methods for other effects
+
+  def apply_effect(effect)
+    # Use cached modified image if available
+    modified_image = get_modified_image(effect)
+    
+    # Apply effect if not cached
+    unless modified_image
+      modified_image = apply_effect_with_random_colors(effect)
+      @modified_images[effect] = modified_image
+    end
+
+    modified_image
+  end
+
+  def combine_all_effects(output_filename)
+    # Combine all modified images in-memory
+    combined_image = Magick::ImageList.new
+    [:geometric_patterns, :fractals, :pixelate, :gradients, :traditional_colors, :minimalist].each do |effect|
+      modified_image = apply_effect(effect)
+      combined_image << modified_image
+    end
+
+    # Save the combined image
+    combined_image.montage(output_filename)
+
+    # Free memory used by cached images
+    @modified_images.clear
+  end
+
+  def generate_random_combined_image(effects)
+    # Initialize an empty canvas
+    combined_image = Magick::Image.new(@original_image.columns, @original_image.rows) do
+      self.background_color = 'transparent'
+    end
+
+    # Composite effects with transparency
+    effects.each do |effect|
+      modified_image = apply_effect_with_random_colors(effect)
+      combined_image.composite!(modified_image, Magick::CenterGravity, Magick::OverCompositeOp)
+    end
+
+    # Save the combined image with random colors
+    combined_image.write("random_combined.png")
+  end
+
+  # Helper method to retrieve a cached modified image
+  def get_modified_image(effect)
+    @modified_images[effect]
+  end
+end
+
+# Run benchmark for each effect
+Benchmark.ips do |x|
+  image_manipulation = ImageManipulation.new("image.jpg")
+  
+  x.report("Apply Geometric Patterns") { image_manipulation.apply_effect(:geometric_patterns) }
+  x.report("Apply Fractals") { image_manipulation.apply_effect(:fractals) }
+  # ... add benchmarks for other effects
+  x.report("Combine All Effects") { image_manipulation.combine_all_effects("combined.png") }
+end
+
 
     # Save the modified image
     @image.write("modified_#{@image.filename}")
