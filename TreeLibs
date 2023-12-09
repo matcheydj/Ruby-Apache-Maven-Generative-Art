@@ -2,6 +2,9 @@
 project_directory/
 │
 ├── Gemfile
+├── LICENSE
+├── README.md
+├── TreeLibs
 ├── main.rb
 ├── image_manipulation.rb
 ├── svg_tools.rb
