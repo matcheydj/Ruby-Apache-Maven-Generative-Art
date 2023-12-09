@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'rmagick'
+require './svg_tools'
 
 class ImageManipulator < Sinatra::Application
   set :public_folder, 'public'
@@ -9,6 +10,17 @@ class ImageManipulator < Sinatra::Application
   end
 
   post '/upload' do
+    # Check if file is SVG
+    if original_filename.include?(".svg")
+      manipulator = SvgTools.new(image_path)
+      effects = params[:effects] || []
+      effects.each do |effect|
+        manipulator.send(effect.to_sym, *params["effect_#{effect}"])
+      end
+      manipulator.save("uploads/#{original_filename}")
+    else
+      # Apply image manipulation effects as before
+    end
     image_file = params[:image_file]
     original_filename = image_file[:filename]
     image_path = "uploads/#{original_filename}"
