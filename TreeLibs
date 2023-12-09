@@ -2,13 +2,13 @@
 project_directory/
 │
 ├── Gemfile
+├── Index.rb
 ├── LICENSE
 ├── README.md
 ├── TreeLibs
-├── main.rb
 ├── image_manipulation.rb
 ├── svg_tools.rb
-├── Index.rb
+├── main.rb
 └── public/
     ├── index.html.erb
     └── results.html.erb
