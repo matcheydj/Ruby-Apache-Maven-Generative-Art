@@ -33,6 +33,27 @@ class ImageManipulation
     @image.write("modified_#{@image.filename}")
   end
 
+  def generate_random_combined_image
+  # Initialize an empty canvas
+  combined_image = Magick::Image.new(@image.columns, @image.rows) do
+    self.background_color = 'transparent'
+  end
+
+  # Create a separate layer for each effect
+  layers = {}
+  [:fractals, :cellular_automata, :moving_particles].each do |effect|
+    layers[effect] = apply_effect(effect, randomize_colors: true)
+  end
+
+  # Combine layers with transparency
+  combined_image.composite!(layers[:fractals], Magick::CenterGravity, Magick::OverCompositeOp)
+  combined_image.composite!(layers[:cellular_automata], Magick::CenterGravity, Magick::OverCompositeOp)
+  combined_image.composite!(layers[:moving_particles], Magick::CenterGravity, Magick::OverCompositeOp)
+
+  # Save the combined image with random colors
+  combined_image.write("random_combined.png")
+end
+
   def combine_all_effects
     # Combine all modified images into a single one
     combined_image = Magick::ImageList.new
