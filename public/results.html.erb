@@ -1,0 +1,15 @@
+<h1>Processed Image</h1>
+<img src="/results/<%= @filename %>" alt="Processed image">
+<br>
+<a href="/">Go back</a><br />
+<div align="center" />
+<h1>Processed Image</h1>
+
+<% if @filename.include?(".svg") %>
+  <object data="/results/<%= @filename %>" type="image/svg+xml" width="100%"></object>
+<% else %>
+  <img src="/results/<%= @filename %>" alt="Processed image">
+<% end %>
+
+<br>
+<a href="/">Go back</a></div>
