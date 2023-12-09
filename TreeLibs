@@ -7,8 +7,8 @@ project_directory/
 ├── README.md
 ├── TreeLibs
 ├── image_manipulation.rb
-├── svg_tools.rb
 ├── main.rb
+├── svg_tools.rb
 └── public/
     ├── index.html.erb
     └── results.html.erb
