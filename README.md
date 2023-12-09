@@ -1,5 +1,21 @@
 # Ruby-Apache-Maven-Generative-Art
-*HOW TO APPLY THE APACHE LICENSE TO YOUR WORK*
+
+    # Treelibs
+    project_directory/
+    │
+    ├── Gemfile
+    ├── Index.rb
+    ├── LICENSE
+    ├── README.md
+    ├── TreeLibs
+    ├── image_manipulation.rb
+    ├── main.rb
+    ├── svg_tools.rb
+    └── public/
+    ├── index.html.erb
+    └── results.html.erb
+
+## *HOW TO APPLY THE APACHE LICENSE TO YOUR WORK*
 
 ## Include a copy of the Apache License, typically in a file called LICENSE, in your work, and consider also including a NOTICE file that references the License.
 
