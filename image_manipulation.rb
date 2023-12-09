@@ -2,21 +2,99 @@ require 'rmagick'
 require 'benchmark/ips'
 
 class ImageManipulation
-  # Define a cache for storing modified images
-  @modified_images = {}
-
   def initialize(image_path)
-    @original_image = Magick::Image.read(image_path).first
+    @image = Magick::Image.read(image_path).first
+    @effects = [:affine, :annotate, :arc, :bezier, :circle, :geometric_patterns, :fractals, :cellular_automata, :pixelate, :gradients, :traditional_colors, :minimalist, :random_colors, :moving_particles]
   end
 
-  # Define common logic for applying effects with random colors
+    # Define individual methods for each effect
+  
+    # Define common logic for applying effects with random colors
   def apply_effect_with_random_colors(effect)
     modified_image = get_modified_image(effect)
     modified_image.modulate(Magick::Pixel.new(rand(256), rand(256), rand(256)))
     modified_image
   end
+  
+  def apply_geometric_patterns
+    # Implement logic for applying geometric patterns
+  end
 
-    # Define individual methods for each effect
+  def apply_fractals
+    # Implement logic for generating a fractal image
+  end
+  
+  def apply_cellular_automata
+    # Apply cellular automata rules for dynamic evolution
+  end
+  
+  def pixelate
+    # Create a retro-inspired pixelated image
+  end
+
+  def gradients
+    # Add gradients to give depth and dimension
+  end
+  
+  def fractals 
+    # Generate a fractal image based on the original
+  end
+  
+  def traditional_colors
+    # Use specific colors based on the image's subject
+  end
+    
+  def minimalist
+    # Convert the image to black, white, and grayscale
+  end
+    
+  def random_colors
+    # Apply a randomized color algorithm
+  end
+      
+  def moving_particles
+    # Add moving particles to the image
+  end
+  
+  # ... define methods for other effects
+
+  def apply_effect(effect)
+    # Implement specific logic for each effect
+    case effect
+    when :geometric_patterns
+      apply_geometric_patterns
+    when :fractals
+      apply_fractals
+    when :cellular_automata
+      apply_cellular_automata
+    when :pixelate
+      pixelate
+    when :gradients
+      gradients
+    when :traditional_colors
+      traditional_colors
+    when :minimalist
+      minimalist
+    when :random_colors
+      random_colors
+    when :moving_particles
+      moving_particles
+    end
+
+    # Save the modified image
+    @image.write("modified_#{@image.filename}")
+  end
+
+  def combine_all_effects
+    # Combine all modified images into a single one
+    combined_image = Magick::ImageList.new
+    Dir.glob("modified_*.png") do |modified_image_path|
+      combined_image << Magick::Image.read(modified_image_path).first
+    end
+    combined_image.montage("combined_image.png")
+  end
+end
+
   def apply_geometric_patterns
     # Implement logic for applying geometric patterns
     # Create a new image
