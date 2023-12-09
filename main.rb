@@ -22,7 +22,13 @@ post '/upload' do
 
     # Combine all effects
     image_manipulation.combine_all_effects
-
+    
+    # Send random_combined effects
+    post '/generate_random' do
+    image_manipulation = ImageManipulation.new(params[:image_url])
+    image_manipulation.generate_random_combined_image
+    send_file "random_combined.png"
+  end
     # Send response
     send_file "original_#{@image.filename}"
     send_file "modified_#{@image.filename}"
